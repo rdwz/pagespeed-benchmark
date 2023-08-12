@@ -4,8 +4,9 @@ const statistics = require('./lib/statistics')
 
 const pagespeedBenchmark = async (url, requestsPerUrl) => {
   const urlMetrics = []
-
+  
   for (let n = 0; n < requestsPerUrl; n++) {
+    console.info('Running ', n + 1, '/', requestsPerUrl)
     const res = await runLighthouse(url)
     const metrics = metricsFromResult(res)
     urlMetrics.push(metrics)
