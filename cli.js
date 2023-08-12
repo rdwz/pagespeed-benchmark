@@ -7,7 +7,7 @@ const printSummary = require('./lib/print_summary')
 
 const optionDefinitions = [
   { name: 'urls', type: String, multiple: true, defaultOption: true },
-  { name: 'requests', alias: 'n', type: Number },
+  { name: 'requests', alias: 'n', type: Number, defaultValue: 5 },
 ]
 
 const run = async () => {
@@ -27,10 +27,8 @@ const run = async () => {
   }
 
   const { urls } = options
-  const defaultRequests = 10
-  const requests = options.requests || defaultRequests
 
-  console.log('Number of requests per url:', requests)
+  console.log('Number of requests per url:', options.requests)
 
   try {
     const summary = {}
@@ -38,7 +36,7 @@ const run = async () => {
     for await (const url of urls) {
       console.log('Processing url:', url)
 
-      const urlStatistics = await pagespeedBenchmark(url, requests, true)
+      const urlStatistics = await pagespeedBenchmark(url, options.requests, true)
       summary[url] = urlStatistics
     }
 
